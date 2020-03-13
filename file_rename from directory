@@ -1,0 +1,16 @@
+import os
+
+path = ("E:/E_Temp/Proctor_Slides")
+
+for dname in os.listdir(path):
+    print("dir=", dname)
+    wrkDir = os.path.join(path, dname)
+    print(wrkDir)
+    for fname in os.listdir(wrkDir):
+        print(fname)
+        srcFile = os.path.join(wrkDir, fname)
+        newName = str(dname)+fname
+        dstFile = os.path.join(path, newName)
+        print (srcFile, newName, dstFile, sep=" ")
+        os.rename(srcFile, dstFile)
+    
