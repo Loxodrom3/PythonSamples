@@ -3,38 +3,42 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 url = 'https://raw.githubusercontent.com/datasets/covid-19/master/data/countries-aggregated.csv'
-coroHeaderNames = ("Date","Country","Confirmed","Deaths")  # as of 3/26, removed "Recovered" data from dataset...
-
-#popURL = 'https://gist.githubusercontent.com/tmcw/4179511/raw/e640b042b4074663a37cd9258db79ac5dbad3e92/pop.csv'
-#popHeaderNames=("Country","Ranking","blank1","name","pop","blank2","blank3","blank4","blank5","blank6","blank7")
+coroHeaderNames = ("Date","Country","Confirmed","Recovered","Deaths")  # as of 3/26, removed "Recovered" data from dataset...
 
 #making data frame from csv file  Source: https://github.com/datasets/covid-19/tree/master/data
 coroDf = pd.read_csv(url, error_bad_lines=False, names=coroHeaderNames, header=0)
-#popDf  = pd.read_csv(popURL, error_bad_lines=False, names=popHeaderNames, header=0)
-#selCHN = coroDf.loc[coroDf['Country'] == 'China', ["Date"], ["Confirmed"]]
 
-yIntercept = 10
+type="Deaths"
+yIntercept = 100
+
+USAPop=1# 311592000
+CHNPop=1#1344130000
+ITAPop=1#  60770000
+SPNPop=1#  46235000
+DEUPop=1#  81726000
+KORPop=1
 
 xUSA=[]
 xCHN=[]
 xITA=[]
 xSPN=[]
 xDEU=[]
+xKOR=[]
 
 USAPlot=[]
 CHNPlot=[]
 ITAPlot=[]
 SPNPlot=[]
 DEUPlot=[]
+KORPlot=[]
 
+USA = coroDf.loc[coroDf["Country"]=="US"]
 CHN = coroDf.loc[coroDf["Country"]=="China"]
 ITA = coroDf.loc[coroDf["Country"]=="Italy"]
 SPN = coroDf.loc[coroDf["Country"]=="Spain"]
-USA = coroDf.loc[coroDf["Country"]=="US"]
 DEU = coroDf.loc[coroDf["Country"]=="Germany"]
-#print(USA)
+KOR = coroDf.loc[coroDf["Country"]=="Korea, South"]
 
-type="Deaths"
 USADate=USA["Date"]
 USAData=USA[type]
 CHNDate=CHN["Date"]
@@ -45,26 +49,33 @@ SPNDate=SPN["Date"]
 SPNData=SPN[type]
 DEUDate=DEU["Date"]
 DEUData=DEU[type]
+KORDate=KOR["Date"]
+KORData=KOR[type]
+print(KORData)
 
 for row in USAData:
     if (row > yIntercept):
-        USAPlot.append(row)
+        USAPlot.append(row/USAPop)
 
 for row in CHNData:
     if (row > yIntercept):
-        CHNPlot.append(row)
+        CHNPlot.append(row/CHNPop)
 
 for row in ITAData:
     if (row > yIntercept):
-        ITAPlot.append(row)
+        ITAPlot.append(row/ITAPop)
 
 for row in SPNData:
     if (row > yIntercept):
-        SPNPlot.append(row)
+        SPNPlot.append(row/SPNPop)
 
 for row in DEUData:
     if (row > yIntercept):
-        DEUPlot.append(row)
+        DEUPlot.append(row/DEUPop)
+
+for row in KORData:
+    if (row > yIntercept):
+        KORPlot.append(row/KORPop)
 
 for x in range(0, len(USAPlot)):
     xUSA.append(x)
@@ -76,12 +87,15 @@ for x in range(0, len(SPNPlot)):
     xSPN.append(x)
 for x in range(0, len(DEUPlot)):
     xDEU.append(x)
+for x in range(0, len(KORPlot)):
+    xKOR.append(x)
 
 plt.plot(xCHN,CHNPlot,label="CHN")
 plt.plot(xITA,ITAPlot,label="ITA")
 plt.plot(xSPN,SPNPlot,label="SPN")
 plt.plot(xUSA,USAPlot,label="USA")
 plt.plot(xDEU,DEUPlot,Label="DEU")
+plt.plot(xKOR,KORPlot,Label="KOR")
 plt.title("Number of days since Reported "+type+" passed "+str(yIntercept))
 #plt.yscale("log")
 plt.legend()
