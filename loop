@@ -1,3 +1,3 @@
-rng = 10
-for x in range(rng):
+numSamp = 10
+for x in range(numSamp):
   print(x)
