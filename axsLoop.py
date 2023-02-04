@@ -42,52 +42,61 @@ imgList = ["BSG-104-20220829-053930-36659038", "BSG-104-20220829-053930-36659038
            "BSG-114-20220705-142440-29423141", "BSG-114-20220705-142440-29423141",  
            "BSG-115-20220714-150410-30862499", "BSG-115-20220714-150410-30862499", "BSG-115-20220714-150410-30862499", "BSG-115-20220714-150410-30862499", "BSG-115-20220714-150410-30862499", "BSG-115-20220714-150410-30862499", "BSG-115-20220714-150410-30862499", 
            "BSG-117-20220614-122129-26834717", "BSG-117-20220614-122129-26834717", "BSG-117-20220614-122129-26834717", "BSG-117-20220614-122129-26834717"]
-imgSet = set(imgList) # get unique set from list
+           
+eachImage = ["xBSG-104-20220829-053930-36659038", "BSG-108-20220819-054840-35632660", "BSG-112-20220721-083055-31906033", "BSG-112-20220726-063016-32739023", "BSG-114-20220705-142440-29423141", "BSG-115-20220714-150410-30862499" ,"BSG-117-20220614-122129-26834717"] # convert to a set to get unique names, and then change to a list so it is subscriptable
+
 xRAW = [-968.5533352, 5701.833361, 5692.520396, -933.53864556, 1880.269828, 1163.899777, 431.1371727, 3585.78726, -466.0412291, 2148.204663, -2380.245797, 3716.161325, -1360.881347, 1788.870743, -5063.097285, 1202.630305, -5061.175557, 951.4418083, 1153.188174, -910.2192759, -4429.964175, -4428.45755, -1186.674527]
 yRAW = [-1809.196663, -1749.85123, -1764.486807, -741.91098237, -2287.26652, 769.7979622, -523.4216769, -602.8574785, -665.5951562, -2308.569421, -1815.077626, -1895.880186, -3295.088133, -3914.096933, -1171.225864, 4490.79701, -1177.700875, 2549.92543, 2551.717946, -3801.74264, -1786.844565, -1793.265585, 6295.042542]
 xRPC = [11.47203181, 26.73382711, 28.50346177, 19.09489844, 6.84324919, 111.1102926, 69.30373325, 91.29210023, 25.39859309, 23.44645231, 16.07662052, 24.97990217, 8.63208513, 3.0126432, 6.66956689, 3.02003773, 5.83890963, 5.71368472, 8.10007059, 3.04806583, 6.41856276, 6.28168004, 11.92973482]
 yRPC = [-19.05544347, 0.21360917, 1.196682219, -10.45342748, 17.35887856, -94.38419136, -64.06145433, -82.67373532, -17.54393954, 33.92489155, -14.81325948, -1.554247489, 2.50136924, -1.99620199, 5.02607826, 2.35514922, 5.25979461, 5.30840906, 4.906913741, -14.4680754, -8.55658783, -9.09469319, -2.79406982]
 
-# print(imgList)
-# print(imgSet)
+#print(imgList)
+#print("images = ", images)
 
 # Define Plots
 row = 2
 col = 4
-fig, axs = plt.subplots(row,col)
+fig, axs = plt.subplots(row,col) # define the subplots
 
 # Scatter Plots i, j
-
-for i in range(row):
-    for j in range(col):
-        for k in range(len(imgSet)):
+for i in range(0, row):
+    for j in range(0, col):
+        print("row = ",i, " col = ", j)
+        for k in range(len(eachImage)):
+            xRAWg =[] # reset x and y's to empts list
+            yRAWg =[]
+            xRPCg =[]
+            yRPCg =[]
+            axs[i,j].plot((0,0),(yLimits1), color="black", lw=0.75)
+            axs[i,j].plot((xLimits1),(0,0), color="black", lw=0.75)
+            axs[i,j].set_facecolor(color= Gry)
+            print(eachImage[k])
             for l in range(len(imgList)):
-                xRAWg =[] # reset x and ys to empts list
-                yRAWg =[]
-                xRPCg =[]
-                yRPCg =[]
-                if imgSet[k] == imgList[l]:
-                    # do once axs[i,j].plot((0,0),(yLimits1), color="black", lw=0.75)
-                    # do once axs[i,j].plot((xLimits1),(0,0), color="black", lw=0.75)
-                    # do once axs[i,j].set_facecolor(color= Gry)
+                print (eachImage[k], " ,", imgList[l])
+                if eachImage[k] == imgList[l]:
+                    print ("yes")
                     xRAWg.append(xRAW[l]) # x RAW for Graph
                     yRAWg.append(yRAW[l])
                     xRPCg.append(xRPC[l])
                     yRPCg.append(yRPC[l])
-                    print(l)
             # end for l
-                axs[i,j].scatter(xRAW1, yRAW1, color =LBlu)
-                axs[i,j].scatter(xRPC1, yRPC1, color =DGrn)
-                axs[i,j].set_title(imgSet[k], fontsize =8)
+                axs[i,j].scatter(xRAW, yRAW, color =LBlu)
+                axs[i,j].scatter(xRPC, yRPC, color =DGrn)
+                axs[i,j].set_title(eachImage[k], fontsize =8)
         #end for k
     # end for j
 # end for i
+plt.show()
 
+stop
+
+
+# -----------------------------------------------
 axs[i,j].plot((0,0),(yLimits1), color="black", lw=0.75)
 axs[i,j].plot((xLimits1),(0,0), color="black", lw=0.75)
 axs[i,j].set_facecolor(color= Gry)
-axs[i,j].scatter(xRAW1, yRAW1, color =LBlu)
-axs[i,j].scatter(xRPC1, yRPC1, color =DGrn)
+axs[i,j].scatter(xRAW, yRAW, color =LBlu)
+axs[i,j].scatter(xRPC, yRPC, color =DGrn)
 axs[i,j].set_title(image1Name, fontsize =8)
 # Draw arrows
 for k in range(len(xRAW)):
@@ -208,5 +217,4 @@ axs[1,3].set(xlim=(xLimits1), ylim=(yLimits1))
 # Show Plots
 plt.show()
 plt.savefig('arrows2axs.png')
-
 
